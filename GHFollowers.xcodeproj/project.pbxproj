@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		597402D723C15DC3005881A2 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597402D623C15DC3005881A2 /* SearchVC.swift */; };
 		597402D923C15DF6005881A2 /* FavoritesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597402D823C15DF6005881A2 /* FavoritesListVC.swift */; };
+		597402DB23C16234005881A2 /* GFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597402DA23C16234005881A2 /* GFButton.swift */; };
+		597402DD23C1654B005881A2 /* GFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597402DC23C1654B005881A2 /* GFTextField.swift */; };
 		59EC46BB23C1198B00145BBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC46BA23C1198B00145BBD /* AppDelegate.swift */; };
 		59EC46BD23C1198B00145BBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC46BC23C1198B00145BBD /* SceneDelegate.swift */; };
 		59EC46C423C1198C00145BBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EC46C323C1198C00145BBD /* Assets.xcassets */; };
@@ -18,6 +20,8 @@
 /* Begin PBXFileReference section */
 		597402D623C15DC3005881A2 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		597402D823C15DF6005881A2 /* FavoritesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListVC.swift; sourceTree = "<group>"; };
+		597402DA23C16234005881A2 /* GFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFButton.swift; sourceTree = "<group>"; };
+		597402DC23C1654B005881A2 /* GFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFTextField.swift; sourceTree = "<group>"; };
 		59EC46B723C1198B00145BBD /* GHFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EC46BA23C1198B00145BBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59EC46BC23C1198B00145BBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 				59EC46C823C1198C00145BBD /* Info.plist */,
 				597402D623C15DC3005881A2 /* SearchVC.swift */,
 				597402D823C15DF6005881A2 /* FavoritesListVC.swift */,
+				597402DA23C16234005881A2 /* GFButton.swift */,
+				597402DC23C1654B005881A2 /* GFTextField.swift */,
 			);
 			path = GHFollowers;
 			sourceTree = "<group>";
@@ -137,7 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				597402DD23C1654B005881A2 /* GFTextField.swift in Sources */,
 				597402D923C15DF6005881A2 /* FavoritesListVC.swift in Sources */,
+				597402DB23C16234005881A2 /* GFButton.swift in Sources */,
 				597402D723C15DC3005881A2 /* SearchVC.swift in Sources */,
 				59EC46BB23C1198B00145BBD /* AppDelegate.swift in Sources */,
 				59EC46BD23C1198B00145BBD /* SceneDelegate.swift in Sources */,
