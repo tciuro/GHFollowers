@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5941C80923CA4BD6000DE70A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941C80823CA4BD6000DE70A /* NetworkManager.swift */; };
+		5941C80C23CAC5D0000DE70A /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941C80B23CAC5D0000DE70A /* ErrorMessage.swift */; };
 		597402D723C15DC3005881A2 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597402D623C15DC3005881A2 /* SearchVC.swift */; };
 		597402D923C15DF6005881A2 /* FavoritesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597402D823C15DF6005881A2 /* FavoritesListVC.swift */; };
 		597402DB23C16234005881A2 /* GFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597402DA23C16234005881A2 /* GFButton.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		5941C80823CA4BD6000DE70A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		5941C80B23CAC5D0000DE70A /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		597402D623C15DC3005881A2 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		597402D823C15DF6005881A2 /* FavoritesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListVC.swift; sourceTree = "<group>"; };
 		597402DA23C16234005881A2 /* GFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFButton.swift; sourceTree = "<group>"; };
@@ -65,6 +67,14 @@
 				5941C80823CA4BD6000DE70A /* NetworkManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		5941C80A23CAC5BC000DE70A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5941C80B23CAC5D0000DE70A /* ErrorMessage.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		597402E823C27472005881A2 /* Screens */ = {
@@ -138,6 +148,7 @@
 		59EC46B923C1198B00145BBD /* GHFollowers */ = {
 			isa = PBXGroup;
 			children = (
+				5941C80A23CAC5BC000DE70A /* Utilities */,
 				5941C80723CA4BC4000DE70A /* Managers */,
 				597402EE23C63381005881A2 /* Model */,
 				597402EA23C274E9005881A2 /* Extensions */,
@@ -230,6 +241,7 @@
 				597402E323C26A90005881A2 /* GFBodyLabel.swift in Sources */,
 				597402E123C26937005881A2 /* GFTitleLabel.swift in Sources */,
 				597402DF23C16F01005881A2 /* FollowerListVC.swift in Sources */,
+				5941C80C23CAC5D0000DE70A /* ErrorMessage.swift in Sources */,
 				5941C80923CA4BD6000DE70A /* NetworkManager.swift in Sources */,
 				59EC46BB23C1198B00145BBD /* AppDelegate.swift in Sources */,
 				59EC46BD23C1198B00145BBD /* SceneDelegate.swift in Sources */,
