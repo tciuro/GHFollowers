@@ -6,12 +6,15 @@
 //  Copyright © 2020 Tito Ciuro. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class NetworkManager {
     static let shared = NetworkManager()
-    let baseURL = "https://api.github.com"
     
+    private var imageCache = NSCache<NSString, UIImage>()
+
+    private let baseURL = "https://api.github.com"
+
     private init() {}
     
     func getFollowers(for username: String, page: Int, completion: @escaping (Result<[Follower], GFError>) -> Void) {
@@ -47,6 +50,35 @@ class NetworkManager {
                 completion(.failure(.failedToBuildFollowerList))
                 return
             }
+        }
+        
+        task.resume()
+    }
+    
+    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        if let cachedImage = imageCache.object(forKey: urlString as NSString) {
+            completion(cachedImage)
+            return
+        }
+        
+        guard let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let self = self,
+                error == nil,
+                let response = response as? HTTPURLResponse, response.statusCode == 200,
+                let data = data,
+                let image = UIImage(data: data) else {
+                    completion(nil)
+                    return
+                }
+            
+            self.imageCache.setObject(image, forKey: urlString as NSString)
+            
+            completion(image)
         }
         
         task.resume()
