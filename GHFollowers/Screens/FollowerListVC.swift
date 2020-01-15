@@ -49,8 +49,11 @@ class FollowerListVC: UIViewController {
     }
     
     private func getFollowers(username: String, page: Int) {
+        let loadingView = showLoadingView()
         NetworkManager.shared.getFollowers(for: username, page: pageCounter) { [weak self] result in
             guard let self = self else { return }
+            
+            self.hideLoadingView(loadingView)
             
             switch result {
             case .success(let followers):
@@ -86,6 +89,7 @@ class FollowerListVC: UIViewController {
 }
 
 extension FollowerListVC: UICollectionViewDelegate {
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -99,4 +103,5 @@ extension FollowerListVC: UICollectionViewDelegate {
             getFollowers(username: username, page: pageCounter)
         }
     }
+    
 }
