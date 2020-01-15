@@ -64,6 +64,7 @@ class SearchVC: UIViewController {
     private func configureTextField() {
         view.addSubview(usernameTextField)
         
+        usernameTextField.keyboardType = .asciiCapableNumberPad
         usernameTextField.delegate = self
         
         NSLayoutConstraint.activate([
