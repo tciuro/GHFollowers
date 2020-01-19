@@ -10,11 +10,11 @@ import UIKit
 
 class UserInfoVC: UIViewController {
     
-    private var username: String!
+    private var username: String
     
     init(username: String) {
-        super.init(nibName: nil, bundle: nil)
         self.username = username
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
