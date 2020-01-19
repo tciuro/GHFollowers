@@ -53,7 +53,6 @@ class FollowerListVC: UIViewController {
     private func configureSearchController() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search for a user name"
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
@@ -131,7 +130,7 @@ extension FollowerListVC: UICollectionViewDelegate {
     
 }
 
-extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
+extension FollowerListVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let filter = searchController.searchBar.text?.lowercased(), !filter.isEmpty else {
@@ -144,10 +143,5 @@ extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
         })
         
         updateData(on: filteredFollowers)
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        filteredFollowers.removeAll()
-        updateData(on: followers)
     }
 }
