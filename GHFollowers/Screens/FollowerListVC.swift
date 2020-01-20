@@ -134,6 +134,7 @@ extension FollowerListVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let filter = searchController.searchBar.text?.lowercased(), !filter.isEmpty else {
+            filteredFollowers.removeAll()
             updateData(on: followers)
             return
         }
