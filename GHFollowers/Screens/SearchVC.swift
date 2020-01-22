@@ -64,7 +64,7 @@ class SearchVC: UIViewController {
     private func configureTextField() {
         view.addSubview(usernameTextField)
         
-        usernameTextField.keyboardType = .asciiCapableNumberPad
+        usernameTextField.autocapitalizationType = .none
         usernameTextField.delegate = self
         
         NSLayoutConstraint.activate([
