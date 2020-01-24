@@ -125,7 +125,7 @@ class NetworkManager {
                 let model = try decoder.decode(T.self, from: data)
                 completion(.success(model))
             } catch {
-                completion(.failure(.failedToBuildFollowerList))
+                completion(.failure(.failedToDecodeResponse))
                 return
             }
         }
