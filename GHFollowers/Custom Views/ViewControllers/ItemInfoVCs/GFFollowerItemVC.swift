@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol GitHubFollowersTappable: class {
+    func didTapGitHubFollowers(of user: User)
+}
+
 class GFFollowerItemVC: GFItemInfoVC {
     
     weak var delegate: GitHubFollowersTappable?

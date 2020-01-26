@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol GitHubProfileTappable: class {
+    func didTapGitHubProfile(of user: User)
+}
+
 class GFRepoItemVC: GFItemInfoVC {
     
     weak var delegate: GitHubProfileTappable?

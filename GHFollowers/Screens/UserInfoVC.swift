@@ -9,14 +9,6 @@
 import UIKit
 import SafariServices
 
-protocol GitHubProfileTappable: class {
-    func didTapGitHubProfile(of user: User)
-}
-
-protocol GitHubFollowersTappable: class {
-    func didTapGitHubFollowers(of user: User)
-}
-
 class UserInfoVC: UIViewController {
     
     let headerView = UIView()
