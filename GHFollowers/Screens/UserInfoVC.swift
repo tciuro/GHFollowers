@@ -122,7 +122,7 @@ class UserInfoVC: UIViewController {
     }
 
     @objc func addToFavorites() {
-        PersistanceManager.shared.addUserToFavorites(named: username)
+        PersistanceManager.shared.addFollowerToFavorites(follower)
     }
 
 }

@@ -12,28 +12,32 @@ struct PersistanceManager {
     
     static let shared = PersistanceManager()
     
-    func addUserToFavorites(named username: String) {
-        let defaults = UserDefaults.standard
-        var followers = favoriteUsers()
-        if !followers.contains(username) {
-            followers.append(username)
-            defaults.set(followers, forKey: GHUserDefaults.followers)
+    enum GHUserDefaults {
+        static let followers = "followers"
+    }
+
+    func addFollowerToFavorites(_ follower: Follower) {
+        var followers = favoriteFollowers()
+        if !followers.contains(follower) {
+            followers.append(follower)
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(followers), forKey: GHUserDefaults.followers)
         }
     }
     
-    func removeUserFromFavorites(named username: String) {
-        let defaults = UserDefaults.standard
-        var followers = favoriteUsers()
-        if followers.contains(username) {
-            followers = followers.filter { $0 != username }
-            defaults.set(followers, forKey: GHUserDefaults.followers)
+    func removeFollowerFromFavorites(_ follower: Follower) {
+        var followers = favoriteFollowers()
+        if followers.contains(follower) {
+            followers = followers.filter { $0.login != follower.login }
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(followers), forKey: GHUserDefaults.followers)
         }
     }
     
-    func favoriteUsers() -> [String] {
-        let defaults = UserDefaults.standard
-        let followers: [String] = defaults.object(forKey: GHUserDefaults.followers) as? [String] ?? []
-        return followers
+    func favoriteFollowers() -> [Follower] {
+        if let data = UserDefaults.standard.value(forKey: GHUserDefaults.followers) as? Data {
+            let followers = try? PropertyListDecoder().decode(Array<Follower>.self, from: data)
+            return followers ?? []
+        }
+        return []
     }
     
 }

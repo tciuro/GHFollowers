@@ -14,6 +14,8 @@ class FavoritesListVC: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBlue
+        
+        print(PersistanceManager.shared.favoriteFollowers())
     }
 
 }
