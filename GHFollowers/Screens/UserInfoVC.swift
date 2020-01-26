@@ -34,14 +34,37 @@ class UserInfoVC: UIViewController {
         getUserInfo()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureFavoriteButton()
+    }
+    
     private func configureViewController() {
         view.backgroundColor = .systemBackground
-        
-        let favoriteButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToFavorites))
-        navigationItem.leftBarButtonItem = favoriteButton
-
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         navigationItem.rightBarButtonItem = doneButton
+    }
+    
+    private func configureFavoriteButton() {
+        setFavoriteButton()
+    }
+    
+    private func setFavoriteButton() {
+        let isFavorite = PersistanceManager.shared.isFollowerAlreadyFavorite(follower)
+        
+        if isFavorite {
+            let clearFromFavoritesButton = UIBarButtonItem(image: UIImage(systemName: SFSymbols.starFilled),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(removeFromFavorites))
+            navigationItem.leftBarButtonItem = clearFromFavoritesButton
+        } else {
+            let addToFavoritesButton = UIBarButtonItem(image: UIImage(systemName: SFSymbols.star),
+                                                       style: .plain,
+                                                       target: self,
+                                                       action: #selector(addToFavorites))
+            navigationItem.leftBarButtonItem = addToFavoritesButton
+        }
     }
     
     private func getUserInfo() {
@@ -123,6 +146,12 @@ class UserInfoVC: UIViewController {
 
     @objc func addToFavorites() {
         PersistanceManager.shared.addFollowerToFavorites(follower)
+        setFavoriteButton()
+    }
+    
+    @objc func removeFromFavorites() {
+        PersistanceManager.shared.removeFollowerFromFavorites(follower)
+        setFavoriteButton()
     }
 
 }

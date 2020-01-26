@@ -13,7 +13,7 @@ class FavoriteCell: UITableViewCell {
     static let reuseID = "FavoriteCell"
     
     let avatarImageView = GFAvatarImageView(frame: .zero)
-    let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 26.0)
+    let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 24.0)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -43,12 +43,12 @@ class FavoriteCell: UITableViewCell {
         let padding: CGFloat = 12.0
         
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: self.centerYAnchor),
+            avatarImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
             avatarImageView.heightAnchor.constraint(equalToConstant: 60.0),
             avatarImageView.widthAnchor.constraint(equalToConstant: 60.0),
             
-            usernameLabel.topAnchor.constraint(equalTo: self.centerYAnchor),
+            usernameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 24.0),
             usernameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
             usernameLabel.heightAnchor.constraint(equalToConstant: 40.0)

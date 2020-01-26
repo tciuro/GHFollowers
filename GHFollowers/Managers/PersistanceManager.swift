@@ -32,6 +32,11 @@ struct PersistanceManager {
         }
     }
     
+    func isFollowerAlreadyFavorite(_ follower: Follower) -> Bool {
+        let followers = favoriteFollowers()
+        return followers.contains(follower)
+    }
+    
     func favoriteFollowers() -> [Follower] {
         if let data = UserDefaults.standard.value(forKey: GHUserDefaults.followers) as? Data {
             let followers = try? PropertyListDecoder().decode(Array<Follower>.self, from: data)

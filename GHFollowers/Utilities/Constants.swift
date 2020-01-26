@@ -14,4 +14,6 @@ enum SFSymbols {
     static let gists = "text.alignleft"
     static let following = "heart"
     static let followers = "person.2"
+    static let star = "star"
+    static let starFilled = "star.fill"
 }
