@@ -15,7 +15,3 @@ enum SFSymbols {
     static let following = "heart"
     static let followers = "person.2"
 }
-
-enum GHUserDefaults {
-    static let followers = "followers"
-}

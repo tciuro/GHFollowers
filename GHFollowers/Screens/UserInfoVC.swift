@@ -15,10 +15,11 @@ class UserInfoVC: UIViewController {
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
     let dateLabel = GFBodyLabel(textAlignment: .center)
-    var username: String
-
-    init(username: String) {
-        self.username = username
+    
+    private var follower: Follower
+    
+    init(follower: Follower) {
+        self.follower = follower
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,7 +45,7 @@ class UserInfoVC: UIViewController {
     }
     
     private func getUserInfo() {
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
+        NetworkManager.shared.getUserInfo(for: follower.login) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let user):
