@@ -35,6 +35,10 @@ class UserInfoVC: UIViewController {
     
     private func configureViewController() {
         view.backgroundColor = .systemBackground
+        
+        let favoriteButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToFavorites))
+        navigationItem.leftBarButtonItem = favoriteButton
+
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         navigationItem.rightBarButtonItem = doneButton
     }
@@ -114,6 +118,10 @@ class UserInfoVC: UIViewController {
 
     @objc func dismissVC() {
         dismiss(animated: true)
+    }
+
+    @objc func addToFavorites() {
+        PersistanceManager.shared.addUserToFavorites(named: username)
     }
 
 }
