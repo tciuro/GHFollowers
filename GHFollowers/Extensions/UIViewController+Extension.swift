@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 extension UIViewController {
     
@@ -52,11 +53,15 @@ extension UIViewController {
     }
     
     func showEmptyStateView(with message: String, in view: UIView) {
-        DispatchQueue.main.async {
-            let emptyStateView = GFEmptyStateView(message: message)
-            emptyStateView.frame = view.bounds
-            view.addSubview(emptyStateView)
-        }
+        let emptyStateView = GFEmptyStateView(message: message)
+        emptyStateView.frame = view.bounds
+        view.addSubview(emptyStateView)
+    }
+    
+    func presentSafariController(with url: URL) {
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.preferredControlTintColor = .systemGreen
+        present(safariVC, animated: true)
     }
     
 }

@@ -122,6 +122,7 @@ class NetworkManager {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .iso8601
                 let model = try decoder.decode(T.self, from: data)
                 completion(.success(model))
             } catch {
