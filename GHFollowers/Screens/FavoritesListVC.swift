@@ -64,6 +64,12 @@ class FavoritesListVC: UIViewController {
             configureUIVisibility()
         }
     }
+    
+    private func deselectTableView() {
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedIndexPath, animated: true)
+        }
+    }
 
 }
 
@@ -73,6 +79,9 @@ extension FavoritesListVC: UITableViewDelegate {
         let favorite = favorites[indexPath.row]
         let destinationVC = UserInfoVC(follower: favorite)
         destinationVC.delegate = self
+        destinationVC.onDismiss = {
+            self.deselectTableView()
+        }
         let navController = UINavigationController(rootViewController: destinationVC)
         present(navController, animated: true)
     }

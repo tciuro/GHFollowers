@@ -26,6 +26,7 @@ class UserInfoVC: UIViewController {
     let dateLabel = GFBodyLabel(textAlignment: .center)
     
     var delegate: FollowerFavoritable?
+    var onDismiss: GenericCompletion?
     
     private var follower: Follower
     
@@ -153,6 +154,9 @@ class UserInfoVC: UIViewController {
 
     @objc func dismissVC() {
         dismiss(animated: true)
+        if let onDismiss = onDismiss {
+            onDismiss()
+        }
     }
 
     @objc func addToFavorites() {
