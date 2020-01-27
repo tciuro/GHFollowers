@@ -21,12 +21,12 @@ class FavoritesListVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        favorites = PersistanceManager.shared.favoriteFollowers()
-        if favorites.isEmpty {
-            showEmptyStateView(with: "There are no Favorites. Tap on a follower and tap \"Add", in: self.view)
-        } else {
-            tableView.reloadData()
-        }
+        configureUIVisibility()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeEmptyStateView(in: view)
     }
     
     private func configureTableView() {
@@ -45,6 +45,25 @@ class FavoritesListVC: UIViewController {
         self.title = "Favorites"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
+    
+    private func configureUIVisibility() {
+        favorites = PersistanceManager.shared.favoriteFollowers()
+        if favorites.isEmpty {
+            tableView.isHidden = true
+            showEmptyStateView(with: "There are no Favorites.\n\nGo to a follower and tap ✩.", in: self.view)
+        } else {
+            tableView.isHidden = false
+            tableView.reloadData()
+        }
+    }
+    
+    private func deleteRow(at indexPath: IndexPath?) {
+        if let indexPath = indexPath {
+            favorites.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            configureUIVisibility()
+        }
+    }
 
 }
 
@@ -53,6 +72,7 @@ extension FavoritesListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let favorite = favorites[indexPath.row]
         let destinationVC = UserInfoVC(follower: favorite)
+        destinationVC.delegate = self
         let navController = UINavigationController(rootViewController: destinationVC)
         present(navController, animated: true)
     }
@@ -61,9 +81,8 @@ extension FavoritesListVC: UITableViewDelegate {
         guard editingStyle == .delete else { return }
         
         let favorite = favorites[indexPath.row]
-        favorites.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
         PersistanceManager.shared.removeFollowerFromFavorites(favorite)
+        deleteRow(at: indexPath)
     }
 }
 
@@ -82,6 +101,14 @@ extension FavoritesListVC: UITableViewDataSource {
         }
         
         return cell
+    }
+    
+}
+
+extension FavoritesListVC: FollowerFavoritable {
+    
+    func followerFavoriteStatusChanged(status: FollowerStatus) {
+        deleteRow(at: tableView.indexPathForSelectedRow)
     }
     
 }

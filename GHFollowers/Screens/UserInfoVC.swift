@@ -9,12 +9,23 @@
 import UIKit
 import SafariServices
 
+enum FollowerStatus {
+    case favorite
+    case notFavorite
+}
+
+protocol FollowerFavoritable {
+    func followerFavoriteStatusChanged(status: FollowerStatus)
+}
+
 class UserInfoVC: UIViewController {
     
     let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
     let dateLabel = GFBodyLabel(textAlignment: .center)
+    
+    var delegate: FollowerFavoritable?
     
     private var follower: Follower
     
@@ -147,11 +158,19 @@ class UserInfoVC: UIViewController {
     @objc func addToFavorites() {
         PersistanceManager.shared.addFollowerToFavorites(follower)
         setFavoriteButton()
+        
+        if let delegate = delegate {
+            delegate.followerFavoriteStatusChanged(status: .favorite)
+        }
     }
     
     @objc func removeFromFavorites() {
         PersistanceManager.shared.removeFollowerFromFavorites(follower)
         setFavoriteButton()
+        
+        if let delegate = delegate {
+            delegate.followerFavoriteStatusChanged(status: .notFavorite)
+        }
     }
 
 }

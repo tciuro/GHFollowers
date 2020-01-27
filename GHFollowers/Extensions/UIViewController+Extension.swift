@@ -58,6 +58,12 @@ extension UIViewController {
         view.addSubview(emptyStateView)
     }
     
+    func removeEmptyStateView(in view: UIView) {
+        if let emptyStateView = view.subviews.filter({ $0 is GFEmptyStateView }).first {
+            emptyStateView.removeFromSuperview()
+        }
+    }
+    
     func presentSafariController(with url: URL) {
         let safariVC = SFSafariViewController(url: url)
         safariVC.preferredControlTintColor = .systemGreen
