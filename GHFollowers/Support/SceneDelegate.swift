@@ -12,6 +12,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
+    let networkManager = NetworkManager()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
@@ -25,14 +27,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func createSearchNC() -> UINavigationController {
-        let searchVC = SearchVC()
+        let searchVC = SearchVC(networkManager: networkManager)
         searchVC.title = "Search"
         searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         return UINavigationController(rootViewController: searchVC)
     }
     
     func createFavoritesListNC() -> UINavigationController {
-        let favoritesList = FavoritesListVC()
+        let favoritesList = FavoritesListVC(networkManager: networkManager)
         favoritesList.title = "Favorites"
         favoritesList.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         return UINavigationController(rootViewController: favoritesList)

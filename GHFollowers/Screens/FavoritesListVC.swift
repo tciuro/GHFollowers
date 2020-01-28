@@ -13,6 +13,17 @@ class FavoritesListVC: UIViewController {
     let tableView = UITableView()
     var favorites: [Follower]!
     
+    private var networkManager: GHNetworkable
+    
+    init(networkManager: GHNetworkable) {
+        self.networkManager = networkManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
@@ -77,7 +88,7 @@ extension FavoritesListVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let favorite = favorites[indexPath.row]
-        let destinationVC = UserInfoVC(follower: favorite)
+        let destinationVC = UserInfoVC(follower: favorite, networkManager: networkManager)
         destinationVC.delegate = self
         destinationVC.onDismiss = {
             self.deselectTableView()
@@ -106,7 +117,7 @@ extension FavoritesListVC: UITableViewDataSource {
 
         if let followerCell = cell as? FavoriteCell {
             let favorite = favorites[indexPath.row]
-            followerCell.set(favorite: favorite)
+            followerCell.set(favorite: favorite, networkManager: networkManager)
         }
         
         return cell

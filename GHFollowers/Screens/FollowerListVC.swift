@@ -23,8 +23,11 @@ class FollowerListVC: UIViewController {
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
     
-    init(username: String) {
+    let networkManager: GHNetworkable!
+    
+    init(username: String, networkManager: GHNetworkable) {
         self.username = username
+        self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -69,7 +72,7 @@ class FollowerListVC: UIViewController {
     
     private func getFollowers(username: String, page: Int) {
         let loadingView = showLoadingView()
-        NetworkManager.shared.getFollowers(for: username, page: pageCounter) { [weak self] result in
+        networkManager.getFollowers(for: username, page: pageCounter) { [weak self] result in
             guard let self = self else { return }
             
             self.hideLoadingView(loadingView)
@@ -101,7 +104,7 @@ class FollowerListVC: UIViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FollowerCell.reuseID, for: indexPath) as? FollowerCell else {
                 fatalError("Could not dequeue cell with identifier: \(FollowerCell.reuseID)")
             }
-            cell.set(follower: follower)
+            cell.set(follower: follower, networkManager: self.networkManager)
             return cell
         })
     }
@@ -134,7 +137,7 @@ extension FollowerListVC: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let follower = filteredFollowers.isEmpty ? followers[indexPath.item] : filteredFollowers[indexPath.item]
-        let destinationVC = UserInfoVC(follower: follower)
+        let destinationVC = UserInfoVC(follower: follower, networkManager: networkManager)
         let navController = UINavigationController(rootViewController: destinationVC)
         present(navController, animated: true)
     }

@@ -12,8 +12,8 @@ class FavoriteCell: UITableViewCell {
 
     static let reuseID = "FavoriteCell"
     
-    let avatarImageView = GFAvatarImageView(frame: .zero)
-    let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 24.0)
+    private let avatarImageView = GFAvatarImageView(frame: .zero)
+    private let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 24.0)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,9 +24,9 @@ class FavoriteCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(favorite: Follower) {
+    func set(favorite: Follower, networkManager: GHNetworkable) {
         usernameLabel.text = favorite.login
-        NetworkManager.shared.downloadImage(from: favorite.avatarUrl.absoluteString, completion: { [weak self] avatarImage in
+        networkManager.downloadImage(from: favorite.avatarUrl.absoluteString, completion: { [weak self] avatarImage in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.avatarImageView.image = avatarImage

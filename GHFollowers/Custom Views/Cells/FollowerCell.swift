@@ -23,9 +23,9 @@ class FollowerCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(follower: Follower) {
+    func set(follower: Follower, networkManager: GHNetworkable) {
         usernameLabel.text = follower.login
-        NetworkManager.shared.downloadImage(from: follower.avatarUrl.absoluteString, completion: { [weak self] avatarImage in
+        networkManager.downloadImage(from: follower.avatarUrl.absoluteString, completion: { [weak self] avatarImage in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.avatarImageView.image = avatarImage

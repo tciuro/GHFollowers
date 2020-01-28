@@ -14,7 +14,18 @@ class SearchVC: UIViewController {
     let usernameTextField = GFTextField()
     let callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
     
-    var isUsernameEntered: Bool { return !(usernameTextField.text?.isEmpty ?? false) }
+    private var isUsernameEntered: Bool { return !(usernameTextField.text?.isEmpty ?? false) }
+    
+    private var networkManager: GHNetworkable!
+    
+    init(networkManager: GHNetworkable) {
+        self.networkManager = networkManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +58,7 @@ class SearchVC: UIViewController {
             return
         }
         
-        let followerListVC = FollowerListVC(username: usernameTextField.text!)
+        let followerListVC = FollowerListVC(username: usernameTextField.text!, networkManager: networkManager)
         followerListVC.title = usernameTextField.text
         
         navigationController?.pushViewController(followerListVC, animated: true)

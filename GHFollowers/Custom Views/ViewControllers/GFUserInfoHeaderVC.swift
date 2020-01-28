@@ -17,10 +17,12 @@ class GFUserInfoHeaderVC: UIViewController {
     let locationLabel = GFSecondaryTitleLabel(fontSize: 18.0)
     let bioLabel = GFBodyLabel(textAlignment: .left)
     
-    var user: User
+    private var user: User
+    private var networkManager: GHNetworkable!
     
-    init(user: User) {
+    init(user: User, networkManager: GHNetworkable) {
         self.user = user
+        self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -36,7 +38,7 @@ class GFUserInfoHeaderVC: UIViewController {
     }
     
     private func configureUIElements() {
-        NetworkManager.shared.downloadImage(from: user.avatarUrl) { image in
+        networkManager.downloadImage(from: user.avatarUrl) { image in
             self.avatarImageView.image = image
         }
         usernameLabel.text = user.login

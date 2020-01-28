@@ -8,8 +8,7 @@
 
 import UIKit
 
-class NetworkManager {
-    static let shared = NetworkManager()
+class NetworkManager: GHNetworkable {
     
     private var imageCache = NSCache<NSString, UIImage>()
 
@@ -20,7 +19,7 @@ class NetworkManager {
         return urlComponents
     }
 
-    private init() {}
+    init() {}
     
     func getFollowers(for username: String, page: Int, completion: @escaping (Result<[Follower], GFError>) -> Void) {
         guard let url = _gitHubURL(with: "/users/\(username)/followers", query: ["per_page": "100", "page": String(page)]) else {
@@ -133,4 +132,5 @@ class NetworkManager {
         
         task.resume()
     }
+    
 }

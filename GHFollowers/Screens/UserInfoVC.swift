@@ -29,9 +29,11 @@ class UserInfoVC: UIViewController {
     var onDismiss: GenericCompletion?
     
     private var follower: Follower
+    private var networkManager: GHNetworkable!
     
-    init(follower: Follower) {
+    init(follower: Follower, networkManager: GHNetworkable) {
         self.follower = follower
+        self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -80,7 +82,7 @@ class UserInfoVC: UIViewController {
     }
     
     private func getUserInfo() {
-        NetworkManager.shared.getUserInfo(for: follower.login) { [weak self] result in
+        networkManager.getUserInfo(for: follower.login) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let user):
@@ -94,7 +96,7 @@ class UserInfoVC: UIViewController {
     }
     
     private func configureUIElements(with user: User) {
-        self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+        self.add(childVC: GFUserInfoHeaderVC(user: user, networkManager: networkManager), to: self.headerView)
         self.add(childVC: GFRepoItemVC(user: user, delegate: self), to: self.itemViewOne)
         self.add(childVC: GFFollowerItemVC(user: user, delegate: self), to: self.itemViewTwo)
         self.setDateLabel(with: user.createdAt)
@@ -192,7 +194,7 @@ extension UserInfoVC: GitHubProfileTappable {
 
 extension UserInfoVC: GitHubFollowersTappable {
     func didTapGitHubFollowers(of user: User) {
-        let followersVC = FollowerListVC(username: user.login)
+        let followersVC = FollowerListVC(username: user.login, networkManager: networkManager)
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         followersVC.navigationItem.rightBarButtonItem = doneButton
         followersVC.title = user.login
