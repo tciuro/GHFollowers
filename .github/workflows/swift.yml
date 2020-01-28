@@ -1,10 +1,13 @@
 name: Swift
 
-on: [push]
+on:
+  push:
+    branches:
+    - master
 
 jobs:
-  build:
-
+  my_job:
+    name: deploy to staging
     runs-on: macOS-latest
 
     steps:
@@ -13,3 +16,4 @@ jobs:
       run: swift build -v
     - name: Run tests
       run: swift test -v
+
