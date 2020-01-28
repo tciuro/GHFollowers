@@ -7,7 +7,7 @@ on:
 
 jobs:
   my_job:
-    name: deploy to staging
+    name: build master project
     runs-on: macOS-latest
 
     steps:
