@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Follower: Codable, Hashable {
+struct Follower: Codable, Equatable, Hashable, GHNetworkModeling {
     var login: String
     var avatarUrl: URL
 }

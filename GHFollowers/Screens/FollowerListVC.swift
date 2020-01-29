@@ -23,9 +23,9 @@ class FollowerListVC: UIViewController {
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
     
-    let networkManager: GHNetworkable!
+    let networkManager: GHNetworkCapable!
     
-    init(username: String, networkManager: GHNetworkable) {
+    init(username: String, networkManager: GHNetworkCapable) {
         self.username = username
         self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
@@ -60,6 +60,7 @@ class FollowerListVC: UIViewController {
         collectionView.backgroundColor = .systemBackground
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
         collectionView.delegate = self
+        collectionView.prefetchDataSource = self
     }
     
     private func configureSearchController() {
@@ -159,4 +160,20 @@ extension FollowerListVC: UISearchResultsUpdating {
         
         updateData(on: filteredFollowers)
     }
+}
+
+extension FollowerListVC: UICollectionViewDataSourcePrefetching {
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let followers = filteredFollowers.isEmpty ? self.followers : filteredFollowers
+        let urls = followers.map { $0.avatarUrl }
+        networkManager.downloadImages(from: urls)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        let allFollowers = filteredFollowers.isEmpty ? self.followers : filteredFollowers
+        let urls = NetworkingHelper.urls(from: indexPaths, list: allFollowers, networkManager: networkManager)
+        networkManager.cancelDownloadingImages(at: urls)
+    }
+    
 }

@@ -13,9 +13,9 @@ class FavoritesListVC: UIViewController {
     let tableView = UITableView()
     var favorites: [Follower]!
     
-    private var networkManager: GHNetworkable
+    private var networkManager: GHNetworkCapable
     
-    init(networkManager: GHNetworkable) {
+    init(networkManager: GHNetworkCapable) {
         self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
     }
@@ -121,6 +121,20 @@ extension FavoritesListVC: UITableViewDataSource {
         }
         
         return cell
+    }
+    
+}
+
+extension FavoritesListVC: UITableViewDataSourcePrefetching {
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        let urls = favorites.map { $0.avatarUrl }
+        networkManager.downloadImages(from: urls)
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        let urls = NetworkingHelper.urls(from: indexPaths, list: favorites, networkManager: networkManager)
+        networkManager.cancelDownloadingImages(at: urls)
     }
     
 }

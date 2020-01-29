@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct User: Codable {
+struct User: Codable, GHNetworkModeling {
     let login: String
-    let avatarUrl: String
+    let avatarUrl: URL
     var name: String?
     var location: String?
     var bio: String?

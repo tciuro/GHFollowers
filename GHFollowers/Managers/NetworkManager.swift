@@ -8,10 +8,11 @@
 
 import UIKit
 
-class NetworkManager: GHNetworkable {
+class NetworkManager: GHNetworkCapable {
     
     private var imageCache = NSCache<NSString, UIImage>()
-
+    private var tasks = [String: URLSessionDataTask]()
+    
     private var baseGitHubURL: URLComponents {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -53,18 +54,39 @@ class NetworkManager: GHNetworkable {
         }
     }
     
-    func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+    func downloadImages(from urls: [URL]) {
+        for url in urls {
+            downloadImage(from: url) { _ in }
+        }
+    }
+    
+    func cancelDownloadingImages(at urls: [URL]) {
+        for url in urls {
+            let urlString = url.absoluteString
+            if let task = tasks[urlString] {
+                if task.state != URLSessionTask.State.canceling {
+                    task.cancel()
+                    tasks[urlString] = nil
+                }
+            }
+        }
+    }
+    
+    func downloadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
+        let urlString = url.absoluteString
+        
         if let cachedImage = imageCache.object(forKey: urlString as NSString) {
             completion(cachedImage)
             return
         }
         
-        guard let url = URL(string: urlString) else {
-            completion(nil)
-            return
-        }
-        
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            defer {
+                if let self = self {
+                    self.tasks[urlString] = nil
+                }
+            }
+            
             guard let self = self,
                 error == nil,
                 let response = response as? HTTPURLResponse, response.statusCode == 200,
@@ -72,12 +94,14 @@ class NetworkManager: GHNetworkable {
                 let image = UIImage(data: data) else {
                     completion(nil)
                     return
-                }
+            }
             
             self.imageCache.setObject(image, forKey: urlString as NSString)
             
             completion(image)
         }
+        
+        tasks[urlString] = task
         
         task.resume()
     }

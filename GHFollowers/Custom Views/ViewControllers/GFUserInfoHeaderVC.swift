@@ -18,9 +18,9 @@ class GFUserInfoHeaderVC: UIViewController {
     let bioLabel = GFBodyLabel(textAlignment: .left)
     
     private var user: User
-    private var networkManager: GHNetworkable!
+    private var networkManager: GHNetworkCapable!
     
-    init(user: User, networkManager: GHNetworkable) {
+    init(user: User, networkManager: GHNetworkCapable) {
         self.user = user
         self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)

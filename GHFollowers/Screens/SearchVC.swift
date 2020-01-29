@@ -16,9 +16,9 @@ class SearchVC: UIViewController {
     
     private var isUsernameEntered: Bool { return !(usernameTextField.text?.isEmpty ?? false) }
     
-    private var networkManager: GHNetworkable!
+    private var networkManager: GHNetworkCapable!
     
-    init(networkManager: GHNetworkable) {
+    init(networkManager: GHNetworkCapable) {
         self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
     }

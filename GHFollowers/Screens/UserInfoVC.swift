@@ -29,9 +29,9 @@ class UserInfoVC: UIViewController {
     var onDismiss: GenericCompletion?
     
     private var follower: Follower
-    private var networkManager: GHNetworkable!
+    private var networkManager: GHNetworkCapable!
     
-    init(follower: Follower, networkManager: GHNetworkable) {
+    init(follower: Follower, networkManager: GHNetworkCapable) {
         self.follower = follower
         self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)

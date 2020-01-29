@@ -24,9 +24,9 @@ class FavoriteCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(favorite: Follower, networkManager: GHNetworkable) {
+    func set(favorite: Follower, networkManager: GHNetworkCapable) {
         usernameLabel.text = favorite.login
-        networkManager.downloadImage(from: favorite.avatarUrl.absoluteString, completion: { [weak self] avatarImage in
+        networkManager.downloadImage(from: favorite.avatarUrl, completion: { [weak self] avatarImage in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.avatarImageView.image = avatarImage
