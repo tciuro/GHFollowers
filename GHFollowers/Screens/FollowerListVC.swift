@@ -165,15 +165,13 @@ extension FollowerListVC: UISearchResultsUpdating {
 extension FollowerListVC: UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let followers = filteredFollowers.isEmpty ? self.followers : filteredFollowers
-        let urls = followers.map { $0.avatarUrl }
-        networkManager.downloadImages(from: urls)
+        let followerAvatarURLs = NetworkingHelper.avatarURLs(for: followers, indexPaths: indexPaths)
+        networkManager.downloadImages(from: followerAvatarURLs)
     }
     
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        let allFollowers = filteredFollowers.isEmpty ? self.followers : filteredFollowers
-        let urls = NetworkingHelper.urls(from: indexPaths, list: allFollowers, networkManager: networkManager)
-        networkManager.cancelDownloadingImages(at: urls)
+        let followerAvatarURLs = NetworkingHelper.avatarURLs(for: followers, indexPaths: indexPaths)
+        networkManager.cancelDownloadingImages(at: followerAvatarURLs)
     }
     
 }

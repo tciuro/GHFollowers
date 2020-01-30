@@ -10,17 +10,15 @@ import UIKit
 
 struct NetworkingHelper {
     
-    static func urls(from indexPaths: [IndexPath], list: [GHNetworkModeling], networkManager: GHNetworkCapable) -> [URL] {
-        let relevantRows = Set<Int>(indexPaths.map { $0.item })
-        var relevantFavorites = [GHNetworkModeling]()
+    static func avatarURLs(for list:[GHNetworkModeling], indexPaths: [IndexPath]) -> [URL] {
+        var followerURLs = [URL]()
         
-        for (index, model) in list.enumerated() {
-            if relevantRows.contains(index) {
-                relevantFavorites.append(model)
-            }
+        for indexPath in indexPaths {
+            let model = list[indexPath.item]
+            followerURLs.append(model.avatarUrl)
         }
         
-        return relevantFavorites.map { $0.avatarUrl }
+        return followerURLs
     }
     
 }
