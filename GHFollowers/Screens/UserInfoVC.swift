@@ -14,7 +14,7 @@ enum FollowerStatus {
     case notFavorite
 }
 
-protocol FollowerFavoritable {
+protocol FollowerFavoritable: class {
     func followerFavoriteStatusChanged(status: FollowerStatus)
 }
 
@@ -25,8 +25,8 @@ class UserInfoVC: UIViewController {
     let itemViewTwo = UIView()
     let dateLabel = GFBodyLabel(textAlignment: .center)
     
-    var delegate: FollowerFavoritable?
-    var onDismiss: GenericCompletion?
+    weak var delegate: FollowerFavoritable?
+    var onDismiss: EmptyCompletion?
     
     private var follower: Follower
     private var networkManager: GHNetworkCapable!
@@ -154,14 +154,14 @@ class UserInfoVC: UIViewController {
         dateLabel.text = "GitHub since \(formatter.string(from: date))"
     }
 
-    @objc func dismissVC() {
+    @objc private func dismissVC() {
         dismiss(animated: true)
         if let onDismiss = onDismiss {
             onDismiss()
         }
     }
 
-    @objc func addToFavorites() {
+    @objc private func addToFavorites() {
         PersistanceManager.shared.addFollowerToFavorites(follower)
         setFavoriteButton()
         
@@ -170,7 +170,7 @@ class UserInfoVC: UIViewController {
         }
     }
     
-    @objc func removeFromFavorites() {
+    @objc private func removeFromFavorites() {
         PersistanceManager.shared.removeFollowerFromFavorites(follower)
         setFavoriteButton()
         

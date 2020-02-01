@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias GenericCompletion = ()->Void
+typealias EmptyCompletion = ()->Void
 
 enum SFSymbols {
     static let locationPin = "mappin.and.ellipse"

@@ -128,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				597402EC23C2775D005881A2 /* GFAlertContainerView.swift */,
-				5941C81023CBAC33000DE70A /* GFAvatarImageView.swift */,
 				5941C81A23CF8305000DE70A /* GFEmptyStateView.swift */,
 				5960C3F023DA78FA000D32D1 /* GFItemInfoView.swift */,
 			);
@@ -154,6 +153,7 @@
 		5941C81723CF82A6000DE70A /* ImageViews */ = {
 			isa = PBXGroup;
 			children = (
+				5941C81023CBAC33000DE70A /* GFAvatarImageView.swift */,
 			);
 			path = ImageViews;
 			sourceTree = "<group>";
@@ -181,8 +181,8 @@
 		5960C3F823DCE8EF000D32D1 /* ItemInfoVCs */ = {
 			isa = PBXGroup;
 			children = (
-				5960C3F623DCE881000D32D1 /* GFFollowerItemVC.swift */,
 				5960C3F223DCD931000D32D1 /* GFItemInfoVC.swift */,
+				5960C3F623DCE881000D32D1 /* GFFollowerItemVC.swift */,
 				5960C3F423DCE69F000D32D1 /* GFRepoItemVC.swift */,
 			);
 			path = ItemInfoVCs;
