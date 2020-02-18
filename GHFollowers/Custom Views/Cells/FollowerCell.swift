@@ -51,4 +51,9 @@ class FollowerCell: UICollectionViewCell {
             usernameLabel.heightAnchor.constraint(equalToConstant: 20.0)
         ])
     }
+    
+    internal override func prepareForReuse() {
+        avatarImageView.image = GFAvatarImageView.placeholderImage 
+        usernameLabel.text = nil
+    }
 }

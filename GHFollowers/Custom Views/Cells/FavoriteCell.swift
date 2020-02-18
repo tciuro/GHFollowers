@@ -55,4 +55,9 @@ class FavoriteCell: UITableViewCell {
         ])
     }
     
+    internal override func prepareForReuse() {
+        avatarImageView.image = GFAvatarImageView.placeholderImage
+        usernameLabel.text = nil
+    }
+    
 }
