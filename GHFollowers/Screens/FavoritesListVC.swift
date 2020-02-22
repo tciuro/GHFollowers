@@ -117,6 +117,7 @@ extension FavoritesListVC: UITableViewDataSource {
 
         if let followerCell = cell as? FavoriteCell {
             let favorite = favorites[indexPath.row]
+            followerCell.layoutIfNeeded() // Ensure contents are set to their final size.
             followerCell.set(favorite: favorite, networkManager: networkManager)
         }
         

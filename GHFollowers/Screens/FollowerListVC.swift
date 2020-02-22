@@ -105,6 +105,8 @@ class FollowerListVC: UIViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FollowerCell.reuseID, for: indexPath) as? FollowerCell else {
                 fatalError("Could not dequeue cell with identifier: \(FollowerCell.reuseID)")
             }
+            
+            cell.layoutIfNeeded() // Ensure contents are set to their final size.
             cell.set(follower: follower, networkManager: self.networkManager)
             return cell
         })
