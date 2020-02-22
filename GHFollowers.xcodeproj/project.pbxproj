@@ -74,6 +74,9 @@
 		597402EC23C2775D005881A2 /* GFAlertContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAlertContainerView.swift; sourceTree = "<group>"; };
 		597402EF23C63390005881A2 /* Follower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		597402F123C633CC005881A2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5976B12C2400ADD5001DFCDD /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		5976B12D2400ADD5001DFCDD /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = SOURCE_ROOT; };
+		5976B12E2400ADD5001DFCDD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		59CA5B6123E244A3006CCF2F /* NetworkingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingHelper.swift; sourceTree = "<group>"; };
 		59CA5B6323E2455F006CCF2F /* GHNetworkModeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHNetworkModeling.swift; sourceTree = "<group>"; };
 		59EC46B723C1198B00145BBD /* GHFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -251,6 +254,16 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		5976B12B2400ADBB001DFCDD /* Package */ = {
+			isa = PBXGroup;
+			children = (
+				5976B12C2400ADD5001DFCDD /* LICENSE */,
+				5976B12D2400ADD5001DFCDD /* Package.swift */,
+				5976B12E2400ADD5001DFCDD /* README.md */,
+			);
+			path = Package;
+			sourceTree = "<group>";
+		};
 		59EC46AE23C1198B00145BBD = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +290,7 @@
 				597402EA23C274E9005881A2 /* Extensions */,
 				597402E923C274A1005881A2 /* Custom Views */,
 				597402E823C27472005881A2 /* Screens */,
+				5976B12B2400ADBB001DFCDD /* Package */,
 				597402EB23C2753A005881A2 /* Support */,
 			);
 			path = GHFollowers;
