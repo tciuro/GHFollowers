@@ -25,10 +25,12 @@ class FollowerCell: UICollectionViewCell {
     
     func set(follower: Follower, networkManager: GHNetworkCapable) {
         usernameLabel.text = follower.login
-        networkManager.downloadImage(from: follower.avatarUrl, completion: { [weak self] avatarImage in
+        networkManager.downloadImage(from: follower.avatarUrl, size: avatarImageView.bounds.size, completion: { [weak self] avatarImage in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                self.avatarImageView.image = avatarImage
+                if let avatarImage = avatarImage {
+                    self.avatarImageView.image = avatarImage
+                }
             }
         })
     }
@@ -50,6 +52,8 @@ class FollowerCell: UICollectionViewCell {
             usernameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             usernameLabel.heightAnchor.constraint(equalToConstant: 20.0)
         ])
+        
+        layoutIfNeeded()
     }
     
     internal override func prepareForReuse() {

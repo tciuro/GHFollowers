@@ -12,8 +12,8 @@ class FavoriteCell: UITableViewCell {
 
     static let reuseID = "FavoriteCell"
     
-    private let avatarImageView = GFAvatarImageView(frame: .zero)
-    private let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 24.0)
+    let avatarImageView = GFAvatarImageView(frame: .zero)
+    let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 24.0)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,7 +26,7 @@ class FavoriteCell: UITableViewCell {
     
     func set(favorite: Follower, networkManager: GHNetworkCapable) {
         usernameLabel.text = favorite.login
-        networkManager.downloadImage(from: favorite.avatarUrl, completion: { [weak self] avatarImage in
+        networkManager.downloadImage(from: favorite.avatarUrl, size: avatarImageView.bounds.size, completion: { [weak self] avatarImage in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.avatarImageView.image = avatarImage
@@ -53,6 +53,8 @@ class FavoriteCell: UITableViewCell {
             usernameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
             usernameLabel.heightAnchor.constraint(equalToConstant: 40.0)
         ])
+        
+        layoutIfNeeded()
     }
     
     internal override func prepareForReuse() {

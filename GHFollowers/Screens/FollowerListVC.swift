@@ -164,7 +164,8 @@ extension FollowerListVC: UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         let followerAvatarURLs = NetworkingHelper.avatarURLs(for: followers, indexPaths: indexPaths)
-        networkManager.downloadImages(from: followerAvatarURLs)
+        guard let indexPath = indexPaths.first, let followerCell = collectionView.cellForItem(at: indexPath) as? FollowerCell else { return }
+        networkManager.downloadImages(from: followerAvatarURLs, size: followerCell.avatarImageView.bounds.size)
     }
     
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {

@@ -38,7 +38,7 @@ class GFUserInfoHeaderVC: UIViewController {
     }
     
     private func configureUIElements() {
-        networkManager.downloadImage(from: user.avatarUrl) { image in
+        networkManager.downloadImage(from: user.avatarUrl, size: avatarImageView.bounds.size) { image in
             self.avatarImageView.image = image
         }
         usernameLabel.text = user.login

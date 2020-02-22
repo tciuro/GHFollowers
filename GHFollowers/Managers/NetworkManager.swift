@@ -54,9 +54,9 @@ class NetworkManager: GHNetworkCapable {
         }
     }
     
-    func downloadImages(from urls: [URL]) {
+    func downloadImages(from urls: [URL], size: CGSize) {
         for url in urls {
-            downloadImage(from: url) { _ in }
+            downloadImage(from: url, size: size) { _ in }
         }
     }
     
@@ -72,7 +72,7 @@ class NetworkManager: GHNetworkCapable {
         }
     }
     
-    func downloadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
+    func downloadImage(from url: URL, size: CGSize, completion: @escaping (UIImage?) -> Void) {
         let urlString = url.absoluteString
         
         if let cachedImage = imageCache.object(forKey: urlString as NSString) {
@@ -80,30 +80,20 @@ class NetworkManager: GHNetworkCapable {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            defer {
-                if let self = self {
-                    self.tasks[urlString] = nil
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            
+            let image = self.downsampleImage(at: url, size: size)
+                
+            DispatchQueue.main.async {
+                if let image = image {
+                    self.imageCache.setObject(image, forKey: urlString as NSString)
+                    completion(image)
+                } else {
+                    completion(nil)
                 }
             }
-            
-            guard let self = self,
-                error == nil,
-                let response = response as? HTTPURLResponse, response.statusCode == 200,
-                let data = data,
-                let image = UIImage(data: data) else {
-                    completion(nil)
-                    return
-            }
-            
-            self.imageCache.setObject(image, forKey: urlString as NSString)
-            
-            completion(image)
         }
-        
-        tasks[urlString] = task
-        
-        task.resume()
     }
     
     // MARK: - Private Section -
@@ -155,6 +145,10 @@ class NetworkManager: GHNetworkCapable {
         }
         
         task.resume()
+    }
+    
+    private func downsampleImage(at url: URL, size: CGSize, scale: CGFloat = UIScreen.main.scale) -> UIImage? {
+        return UIHelper.downsample(imageAt: url, to: size, scale: scale)
     }
     
 }
