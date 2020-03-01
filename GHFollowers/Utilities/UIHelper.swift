@@ -30,7 +30,7 @@ struct UIHelper {
         assert(pointSize != .zero, "*** Error: downsampling to zero size detected!")
         
         let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
-        let imageSource = CGImageSourceCreateWithURL(imageURL as CFURL, imageSourceOptions)!
+        guard let imageSource = CGImageSourceCreateWithURL(imageURL as CFURL, imageSourceOptions) else { return nil }
         let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
         
         let downsampleOptions =
