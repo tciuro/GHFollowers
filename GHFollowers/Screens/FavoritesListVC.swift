@@ -68,12 +68,12 @@ class FavoritesListVC: UIViewController {
         }
     }
     
-    private func deleteRow(at indexPath: IndexPath?) {
-        if let indexPath = indexPath {
-            favorites.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            configureUIVisibility()
-        }
+    private func deleteRow(at indexPath: IndexPath) {
+        
+        favorites.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        configureUIVisibility()
+    
     }
     
     private func deselectTableView() {
@@ -142,9 +142,13 @@ extension FavoritesListVC: UITableViewDataSourcePrefetching {
 }
 
 extension FavoritesListVC: FollowerFavoritable {
-    
-    func followerFavoriteStatusChanged(status: FollowerStatus) {
-        deleteRow(at: tableView.indexPathForSelectedRow)
+    func followerFavoriteStatusChanged(isFavorite: Bool) {
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        if !isFavorite {
+            deleteRow(at: indexPath)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
 }

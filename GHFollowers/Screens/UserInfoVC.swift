@@ -9,13 +9,9 @@
 import UIKit
 import SafariServices
 
-enum FollowerStatus {
-    case favorite
-    case notFavorite
-}
 
 protocol FollowerFavoritable: class {
-    func followerFavoriteStatusChanged(status: FollowerStatus)
+    func followerFavoriteStatusChanged(isFavorite: Bool)
 }
 
 class UserInfoVC: UIViewController {
@@ -31,14 +27,38 @@ class UserInfoVC: UIViewController {
     private var follower: Follower
     private var networkManager: GHNetworkCapable!
     
+    var isUserFavorite: Bool! {
+        willSet {
+            if newValue {
+                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "star.fill")!
+            } else {
+                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "star")!
+            }
+        }
+    }
+    
     init(follower: Follower, networkManager: GHNetworkCapable) {
         self.follower = follower
+        self.isUserFavorite = PersistanceManager.shared.isFollowerAlreadyFavorite(follower)
         self.networkManager = networkManager
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isUserFavorite && !PersistanceManager.shared.isFollowerAlreadyFavorite(follower) {
+            PersistanceManager.shared.addFollowerToFavorites(follower)
+            
+        } else if !isUserFavorite && PersistanceManager.shared.isFollowerAlreadyFavorite(follower) {
+            PersistanceManager.shared.removeFollowerFromFavorites(follower)
+        }
+        
+        delegate?.followerFavoriteStatusChanged(isFavorite: isUserFavorite)
     }
     
     override func viewDidLoad() {
@@ -60,25 +80,16 @@ class UserInfoVC: UIViewController {
     }
     
     private func configureFavoriteButton() {
-        setFavoriteButton()
+        if isUserFavorite {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill")!, style: .plain, target: self, action: #selector(setFavoriteButton))
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star")!, style: .plain, target: self, action: #selector(setFavoriteButton))
+        }
     }
     
+    @objc
     private func setFavoriteButton() {
-        let isFavorite = PersistanceManager.shared.isFollowerAlreadyFavorite(follower)
-        
-        if isFavorite {
-            let clearFromFavoritesButton = UIBarButtonItem(image: UIImage(systemName: SFSymbols.starFilled),
-                                                           style: .plain,
-                                                           target: self,
-                                                           action: #selector(removeFromFavorites))
-            navigationItem.leftBarButtonItem = clearFromFavoritesButton
-        } else {
-            let addToFavoritesButton = UIBarButtonItem(image: UIImage(systemName: SFSymbols.star),
-                                                       style: .plain,
-                                                       target: self,
-                                                       action: #selector(addToFavorites))
-            navigationItem.leftBarButtonItem = addToFavoritesButton
-        }
+        isUserFavorite.toggle()
     }
     
     private func getUserInfo() {
@@ -101,7 +112,7 @@ class UserInfoVC: UIViewController {
         self.add(childVC: GFFollowerItemVC(user: user, delegate: self), to: self.itemViewTwo)
         self.setDateLabel(with: user.createdAt)
     }
-    
+        
     private func layoutUI() {
         view.addSubview(headerView)
         view.addSubview(itemViewOne)
@@ -160,25 +171,6 @@ class UserInfoVC: UIViewController {
             onDismiss()
         }
     }
-
-    @objc private func addToFavorites() {
-        PersistanceManager.shared.addFollowerToFavorites(follower)
-        setFavoriteButton()
-        
-        if let delegate = delegate {
-            delegate.followerFavoriteStatusChanged(status: .favorite)
-        }
-    }
-    
-    @objc private func removeFromFavorites() {
-        PersistanceManager.shared.removeFollowerFromFavorites(follower)
-        setFavoriteButton()
-        
-        if let delegate = delegate {
-            delegate.followerFavoriteStatusChanged(status: .notFavorite)
-        }
-    }
-
 }
 
 extension UserInfoVC: GitHubProfileTappable {
