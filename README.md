@@ -1,6 +1,6 @@
 # GHFollowers
 
-![Swift](https://github.com/tciuro/GHFollowers/workflows/Swift/badge.svg?branch=master)
+![CI](https://github.com/tciuro/GHFollowers/workflows/CI/badge.svg?branch=master)
 
 Project based on Sean Allen's *iOS Dev Job Interview Practice* course:
 
