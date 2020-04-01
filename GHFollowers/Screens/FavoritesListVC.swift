@@ -64,6 +64,7 @@ class FavoritesListVC: UIViewController {
             showEmptyStateView(with: "There are no Favorites.\n\nGo to a follower and tap ✩.", in: self.view)
         } else {
             tableView.isHidden = false
+            removeEmptyStateView(in: view)
             tableView.reloadData()
         }
     }
@@ -91,7 +92,7 @@ extension FavoritesListVC: UITableViewDelegate {
         let destinationVC = UserInfoVC(follower: favorite, networkManager: networkManager)
         destinationVC.delegate = self
         destinationVC.onDismiss = {
-            self.deselectTableView()
+            self.viewWillAppear(true)
         }
         let navController = UINavigationController(rootViewController: destinationVC)
         present(navController, animated: true)
