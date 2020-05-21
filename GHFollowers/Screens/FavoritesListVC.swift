@@ -131,7 +131,8 @@ extension FavoritesListVC: UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         let favoritesAvatarURLs = NetworkingHelper.avatarURLs(for: favorites, indexPaths: indexPaths)
-        guard let indexPath = indexPaths.first, let favoriteCell = tableView.cellForRow(at: indexPath) as? FavoriteCell else { return }
+        guard let indexPath = indexPaths.first else { return }
+        guard let favoriteCell = tableView.dequeueReusableCell(withIdentifier: FavoriteCell.reuseID, for: indexPath) as? FavoriteCell else { return }
         networkManager.downloadImages(from: favoritesAvatarURLs, size: favoriteCell.avatarImageView.bounds.size)
     }
     
